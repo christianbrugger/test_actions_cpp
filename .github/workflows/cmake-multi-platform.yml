@@ -40,13 +40,14 @@ jobs:
       QT_QPA_PLATFORM: offscreen
 
     steps:
-    # - uses: actions/checkout@v4
-    #   with:
-    #     persist-credentials: false
+    - uses: actions/checkout@v4
+      with:
+        persist-credentials: false
 
     - name: Clone Repo
       run: |
-        git clone --depth 1 ${{ github.repositoryUrl }} --branch ${{ github.ref }} ${{ github.workspace }}
+        rm -r ${{ github.workspace }}
+        git clone --depth 1 ${{ github.repositoryUrl }}  ${{ github.workspace }}
 
 
     
