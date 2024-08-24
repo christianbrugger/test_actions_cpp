@@ -51,7 +51,7 @@ jobs:
         # cache-key-prefix: install-qt-action-${{ matrix.os }}-qtbase-qtsvg
         # cache: true
         # archives: 'qtbase qtsvg'
-        archives: 'qtbase'
+        archives: 'icu qtbase qtsvg'
         
     - name: Install System Qt
       if: runner.os == 'Linux' && matrix.system_qt
