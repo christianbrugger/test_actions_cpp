@@ -46,7 +46,7 @@ jobs:
 
     - name: Clone Repo
       run: |
-        git clone --depth 1 ${{ github.repositoryUrl }}  ${{ github.workspace }}
+        git clone --depth 1 https://github.com/christianbrugger/test_actions_cpp  ${{ github.workspace }}
 
 
     
