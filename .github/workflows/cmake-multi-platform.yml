@@ -49,7 +49,7 @@ jobs:
       shell: pwsh
       run: |
         git submodule status > submodule_hashes.txt
-        Get-FileHash tmp.txt -Algorithm SHA256
+        Get-FileHash submodule_hashes.txt -Algorithm SHA256
         cat submodule_hashes.txt
     - name: Restore Submodule
       id: cache-submodule-restore
