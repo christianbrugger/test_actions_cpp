@@ -47,7 +47,7 @@ jobs:
       shell: pwsh
       run: |
         git submodule status > tmp.txt
-        $env:LS_SUBMODULE_SHA = (Get-FileHash status.txt -Algorithm SHA256).Hash
+        $env:LS_SUBMODULE_SHA = (Get-FileHash tmp.txt -Algorithm SHA256).Hash
         cat tmp.txt
         echo $env:LS_SUBMODULE_SHA
         rm tmp.txt
