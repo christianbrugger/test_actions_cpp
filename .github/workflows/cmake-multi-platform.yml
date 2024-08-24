@@ -1,5 +1,8 @@
-# Documentation:
+# Syntax:
 # https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions
+#
+# Contexts:
+# https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/accessing-contextual-information-about-workflow-runs
 
 name: CMake Build
 
@@ -8,6 +11,9 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
+env:
+  LS_QT_VERSION: 6.7.2
 
 jobs:
   build:
@@ -47,10 +53,9 @@ jobs:
       if: ${{ ! matrix.system_qt }}
       uses: jurplel/install-qt-action@v4
       with: 
-        version: 6.7.2
-        # cache-key-prefix: install-qt-action-${{ matrix.os }}-qtbase-qtsvg
-        # cache: true
-        # archives: 'qtbase qtsvg'
+        version: ${{ env.LS_QT_VERSION }}
+        cache-key-prefix: install-qt-action-v4-${{ env.LS_QT_VERSION }}-${{ matrix.os }}-icu-qtbase-qtsvg
+        cache: true
         archives: 'icu qtbase qtsvg'
         
     - name: Install System Qt
