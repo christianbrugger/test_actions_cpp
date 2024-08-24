@@ -36,6 +36,9 @@ jobs:
     
     - uses: seanmiddleditch/gha-setup-ninja@v5
 
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+
     - name: Variables
       id: strings
       shell: bash
