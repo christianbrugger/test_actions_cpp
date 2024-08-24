@@ -48,7 +48,7 @@ jobs:
       uses: jurplel/install-qt-action@v4
       with: 
         version: 6.7.2
-        archives: 'qtbase qtsvg'
+        # archives: 'qtbase qtsvg'
         # cache: true
         
     - name: Install System Qt
