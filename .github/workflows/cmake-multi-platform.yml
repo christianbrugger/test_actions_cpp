@@ -48,17 +48,15 @@ jobs:
       working-directory: ${{ github.workspace }}
       shell: pwsh
       run: |
-        git submodule status > tmp.txt
-        $env:LS_SUBMODULE_SHA = (Get-FileHash tmp.txt -Algorithm SHA256).Hash
-        cat tmp.txt
-        echo $env:LS_SUBMODULE_SHA
-        rm tmp.txt
+        git submodule status > submodule_hashes.txt
+        Get-FileHash tmp.txt -Algorithm SHA256
+        cat submodule_hashes.txt
     - name: Restore Submodule
       id: cache-submodule-restore
       uses: actions/cache/restore@v4
       with:
         path: external/*/
-        key: ${{ runner.os }}-submodule-${{ env.LS_SUBMODULE_SHA }}
+        key: ${{ matrix.os }}-submodule-${{ hashFiles(submodule_hashes.txt) }}
     - name: Refresh Submodule
       if: steps.cache-submodule-restore.outputs.cache-hit != 'true'
       uses: actions/checkout@v4
