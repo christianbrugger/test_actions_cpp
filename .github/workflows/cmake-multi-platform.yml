@@ -26,6 +26,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - uses: ilammy/msvc-dev-cmd@v1
 
     - name: Set Env
       id: strings
@@ -43,7 +44,7 @@ jobs:
       if: runner.os == 'Windows'
       run: choco install ninja -y
     
-    - name: Configure CMake
+    - name: Configure CMake Windows
       working-directory: ${{ github.workspace }}
       run: |
         cmake --version
@@ -52,7 +53,7 @@ jobs:
     - name: Build
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
-        ninja
+        ninja -v
 
     - name: Test Linux
       if: runner.os == 'Linux'
