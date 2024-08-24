@@ -45,9 +45,12 @@ jobs:
     #     persist-credentials: false
 
     - name: Clone Repo
-      run: |
-        # git clone --depth 1 https://github.com/christianbrugger/test_actions_cpp  ${{ github.workspace }}
-        git clone --depth 1 --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git ${{ github.workspace }}
+      run: >
+        git clone 
+          --depth 1 
+          --branch ${{ github.ref_name }} 
+          https://github.com/${{ github.repository }}.git 
+          ${{ github.workspace }}
 
     
     - name: Submodule Hash
