@@ -49,7 +49,7 @@ jobs:
       with: 
         version: 6.7.2
         # archives: 'qtbase qtsvg'
-        # cache: true
+        cache: true
         
     - name: Install System Qt
       if: runner.os == 'Linux' && matrix.system_qt
