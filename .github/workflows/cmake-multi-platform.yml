@@ -31,7 +31,7 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1
     - uses: seanmiddleditch/gha-setup-ninja@v5
 
-    - name: Set Env
+    - name: Variables
       id: strings
       shell: bash
       run: |
@@ -50,18 +50,6 @@ jobs:
     
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
+      # use wildcard * to capture .exe on windows
       run: |
         ./action_cli*
-
-
-    # - name: Test Linux
-    #   if: runner.os == 'Linux'
-    #   working-directory: ${{ steps.strings.outputs.build-output-dir }}
-    #   run: |
-    #     ./action_cli
-
-    # - name: Test Windows
-    #   if: runner.os == 'Windows'
-    #   working-directory: ${{ steps.strings.outputs.build-output-dir }}
-    #   run: |
-    #     ./action_cli.exe
