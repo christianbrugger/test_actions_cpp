@@ -55,7 +55,7 @@ jobs:
       with:
         # path: external/*/
         path: .git/modules
-        key: ${{ matrix.os }}-submodule-${{ hashFiles('submodule_hashes.txt') }}
+        key: ${{ matrix.os }}-submodule-${{ hashFiles('submodule_hashes.txt') }}-2
     - name: Refresh Submodule
       if: steps.cache-submodule-restore.outputs.cache-hit != 'true'
       uses: actions/checkout@v4
