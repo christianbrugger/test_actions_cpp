@@ -43,15 +43,15 @@ jobs:
     
     - uses: seanmiddleditch/gha-setup-ninja@v5
 
-    - name: Install Qt Windows
+    - name: Install Latest Qt
       if: ${{ ! matrix.system_qt }}
       uses: jurplel/install-qt-action@v4
       with: 
         version: 6.7.2
-        archives: 'qtbase qtsvg'
+        # archives: 'qtbase qtsvg'
         cache: true
         
-    - name: Install Qt Linux
+    - name: Install System Qt
       if: runner.os == 'Linux' && matrix.system_qt
       run: |
         sudo apt-get update
