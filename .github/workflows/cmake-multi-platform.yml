@@ -37,7 +37,7 @@ jobs:
       with:
         submodules: recursive
 
-    # required so cmake finds MSVC compilers
+    # required so cmake finds MSVC compiler
     - uses: ilammy/msvc-dev-cmd@v1
     
     - uses: seanmiddleditch/gha-setup-ninja@v5
