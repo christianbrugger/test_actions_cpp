@@ -1,6 +1,6 @@
-#include <iostream>
+#include "fmt/core.h"
 
 auto main() -> int {
-    std::cout << "test" << '\n';
+    fmt::print("hello from fmt\n");
     return 0;
 }
