@@ -54,9 +54,9 @@ jobs:
       uses: jurplel/install-qt-action@v4
       with: 
         version: ${{ env.LS_QT_VERSION }}
+        archives: 'icu qtbase qtsvg'
         cache-key-prefix: install-qt-action-v4-${{ env.LS_QT_VERSION }}-${{ matrix.os }}-icu-qtbase-qtsvg
         cache: true
-        archives: 'icu qtbase qtsvg'
         
     - name: Install System Qt
       if: runner.os == 'Linux' && matrix.system_qt
