@@ -17,12 +17,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: windows-2022
-            preset: win-msvc-release
-          - os: ubuntu-24.04
-            preset: linux-gcc-release
-          - os: ubuntu-24.04
-            preset: linux-clang-release
+          - preset: win-msvc-release
+            os: windows-2022
+          - preset: win-clang-release
+            os: windows-2022
+          - preset: linux-gcc-release
+            os: ubuntu-24.04
+          - preset: linux-clang-release
+            os: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v4
