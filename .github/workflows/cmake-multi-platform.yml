@@ -56,7 +56,7 @@ jobs:
       uses: actions/cache/restore@v4
       with:
         path: external/*/
-        key: ${{ matrix.os }}-submodule-${{ hashFiles(submodule_hashes.txt) }}
+        key: ${{ matrix.os }}-submodule-${{ hashFiles('submodule_hashes.txt') }}
     - name: Refresh Submodule
       if: steps.cache-submodule-restore.outputs.cache-hit != 'true'
       uses: actions/checkout@v4
