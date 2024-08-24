@@ -1,0 +1,171 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 25,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "common",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}"
+        },
+        {
+            "name": "common-linux",
+            "hidden": true,
+            "inherits": "common",
+            "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Linux"}
+        },
+        {
+            "name": "common-linux-gcc",
+            "hidden": true,
+            "inherits": "common-linux",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc-13",
+                "CMAKE_CXX_COMPILER": "g++-13"
+            }
+        },
+        {
+            "name": "common-linux-clang",
+            "hidden": true,
+            "inherits": "common-linux",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang-18",
+                "CMAKE_CXX_COMPILER": "clang++-18"
+            }
+        },
+        {
+            "name": "common-win",
+            "hidden": true,
+            "inherits": "common",
+            "condition": {"type": "equals", "lhs": "${hostSystemName}", "rhs": "Windows"},
+            
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "hostOS": [ "Windows" ]
+                }
+            }
+        },
+
+        {
+            "name": "linux-gcc-debug",
+            "displayName": "GCC Debug",
+            "description": "Compile debug build type with GCC compiler",
+            "inherits": "common-linux-gcc",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "linux-gcc-release",
+            "displayName": "GCC Debug",
+            "description": "Compile release build type with GCC compiler",
+            "inherits": "common-linux-gcc",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+
+        {
+            "name": "linux-clang-debug",
+            "displayName": "Clang Debug",
+            "description": "Compile debug build type with Clang compiler",
+            "inherits": "common-linux-clang",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "linux-clang-debug-trace",
+            "displayName": "Clang Debug Trace",
+            "description": "Compile debug build type with Clang compiler and time tracing. Note, does not support ccache.",
+            "inherits": "common-linux-clang",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "linux-clang-release",
+            "displayName": "Clang Debug",
+            "description": "Compile release build type with Clang compiler",
+            "inherits": "common-linux-clang",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+		
+        {
+            "name": "win-msvc-debug",
+            "displayName": "MSVC Debug",
+            "description": "Compile debug build type with MSVC compiler",
+            "inherits": "common-win",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-msvc-x64"
+                }
+            }
+        },
+        {
+            "name": "win-msvc-release",
+            "displayName": "MSVC Release",
+            "description": "Compile release build type with MSVC compiler",
+            "inherits": "common-win",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-msvc-x64"
+                }
+            }
+        },
+        
+        {
+            "name": "win-clang-debug",
+            "displayName": "Clang Debug",
+            "description": "Compile debug build type with Clang compiler",
+            "inherits": "common-win",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "clang-cl",
+                "CMAKE_CXX_COMPILER": "clang-cl"
+                
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-clang-x64"
+                }
+            }
+        },
+        {
+            "name": "win-clang-release",
+            "displayName": "Clang Release",
+            "description": "Compile release build type with Clang compiler",
+            "inherits": "common-win",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_C_COMPILER": "clang-cl",
+                "CMAKE_CXX_COMPILER": "clang-cl"
+                
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-clang-x64"
+                }
+            }
+        }
+    ]
+}
