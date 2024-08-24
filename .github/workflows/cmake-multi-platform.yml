@@ -44,7 +44,7 @@ jobs:
     - uses: seanmiddleditch/gha-setup-ninja@v5
 
     - name: Install Qt Windows
-      if: matrix.system_qt == 'false'
+      if: ${{ ! matrix.system_qt }}
       uses: jurplel/install-qt-action@v4
       with: 
         version: 6.7.2
@@ -52,7 +52,7 @@ jobs:
         cache: true
         
     - name: Install Qt Linux
-      if: runner.os == 'Linux' && matrix.system_qt == 'true'
+      if: runner.os == 'Linux' && matrix.system_qt
       run: |
         sudo apt-get update
         sudo apt-get install --yes --no-install-suggests \
