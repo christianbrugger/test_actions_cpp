@@ -48,8 +48,8 @@ jobs:
       uses: jurplel/install-qt-action@v4
       with: 
         version: 6.7.2
-        # archives: 'qtbase qtsvg'
-        cache: true
+        archives: 'qtbase qtsvg'
+        # cache: true
         
     - name: Install System Qt
       if: runner.os == 'Linux' && matrix.system_qt
