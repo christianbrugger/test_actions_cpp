@@ -60,6 +60,8 @@ jobs:
     
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
+      env:
+        QT_QPA_PLATFORM: offscreen
       # use wildcard * to capture .exe on windows
       run: |
         ./action_cli*
