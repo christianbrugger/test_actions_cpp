@@ -46,8 +46,7 @@ jobs:
 
     - name: Clone Repo
       run: >
-        git clone 
-        --depth 1 
+        git clone --depth 1 
         --branch ${{ github.ref_name }} 
         https://github.com/${{ github.repository }}.git 
         ${{ github.workspace }}
