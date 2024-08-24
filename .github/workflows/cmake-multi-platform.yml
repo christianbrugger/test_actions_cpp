@@ -49,6 +49,7 @@ jobs:
       with: 
         version: 6.7.2
         # archives: 'qtbase qtsvg'
+        cache-key-prefix: install-qt-action-${{ matrix.os }}
         cache: true
         
     - name: Install System Qt
