@@ -41,6 +41,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+
     
     - name: Submodule Hash
       working-directory: ${{ github.workspace }}
@@ -51,10 +53,26 @@ jobs:
         cat tmp.txt
         echo $env:LS_SUBMODULE_SHA
         rm tmp.txt
-    
-    - uses: actions/checkout@v4
+    - name: Restore Submodule
+      id: cache-submodule-restore
+      uses: actions/cache/restore@v4
+      with:
+        path: external/*/
+        key: ${{ runner.os }}-submodule-${{ env.LS_SUBMODULE_SHA }}
+    - name: Refresh Submodule
+      if: steps.cache-submodule-restore.outputs.cache-hit != 'true'
+      uses: actions/checkout@v4
       with:
         submodules: recursive
+    - name: Cache Submodule
+      uses: actions/cache/save@v4
+      with:
+        path: external/*/
+        key: ${{ steps.cache-submodule-restore.outputs.cache-primary-key }}
+
+
+
+
 
     # required so cmake finds MSVC compiler
     - uses: ilammy/msvc-dev-cmd@v1
