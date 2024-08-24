@@ -52,10 +52,14 @@ jobs:
         
     - name: Install Qt Linux
       if: runner.os == 'Linux'
-      run: |
-        sudo apt-get update
-        sudo apt-get install --yes --no-install-suggests \
-            qt6-base-dev libqt6svg6 qt6-base-private-dev
+      uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: qt6-base-dev libqt6svg6 qt6-base-private-dev
+        version: 1.0
+     # run: |
+     #   sudo apt-get update
+     #   sudo apt-get install --yes --no-install-suggests \
+     #       qt6-base-dev libqt6svg6 qt6-base-private-dev
 
     - name: Variables
       id: strings
