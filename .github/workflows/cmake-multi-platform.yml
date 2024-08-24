@@ -27,11 +27,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set reusable strings      
+    - name: Set Env
       id: strings
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build/${{ matrix.preset }}" >> "$GITHUB_OUTPUT"
+
+    - name: Install Ninja
+      run: |
+        sudo apt-get update && sudo apt-get install -y ninja-build
 
     - name: Configure CMake
       working-directory: ${{ github.workspace }}
