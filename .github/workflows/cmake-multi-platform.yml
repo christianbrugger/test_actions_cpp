@@ -27,7 +27,10 @@ jobs:
             os: ubuntu-24.04
 
     env:
+      # ask apt-get to never interact
       DEBIAN_FRONTEND: noninteractive
+      # set default platform plugin for qt so the executables can run
+      QT_QPA_PLATFORM: offscreen
 
     steps:
     - uses: actions/checkout@v4
@@ -44,12 +47,15 @@ jobs:
       uses: jurplel/install-qt-action@v4
       with: 
         version: 6.7.2
+        archives: 'qtbase qtsvg'
+        cache: true
         
     - name: Install Qt Linux
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y qt6-base-dev libqt6svg6 qt6-base-private-dev
+        sudo apt-get install --yes --no-install-suggests \
+            qt6-base-dev libqt6svg6 qt6-base-private-dev
 
     - name: Variables
       id: strings
@@ -70,8 +76,6 @@ jobs:
     
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      env:
-        QT_QPA_PLATFORM: offscreen
       # use wildcard * to capture .exe on windows
       run: |
         ./action_cli*
