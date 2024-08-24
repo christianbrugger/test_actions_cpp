@@ -41,6 +41,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
+    - name: Submodule Hash
+      run: |
+        git submodule status
+    
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -48,6 +54,7 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1
     
     - uses: seanmiddleditch/gha-setup-ninja@v5
+
 
     - name: Install Latest Qt
       if: ${{ ! matrix.system_qt }}
