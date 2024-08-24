@@ -56,6 +56,7 @@ jobs:
       with:
         packages: qt6-base-dev libqt6svg6 qt6-base-private-dev
         version: 1.0
+        execute_install_scripts: true
      # run: |
      #   sudo apt-get update
      #   sudo apt-get install --yes --no-install-suggests \
