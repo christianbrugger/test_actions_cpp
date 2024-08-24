@@ -61,6 +61,7 @@ jobs:
       with:
         submodules: recursive
     - name: Cache Submodule
+      if: steps.cache-submodule-restore.outputs.cache-hit != 'true'
       uses: actions/cache/save@v4
       with:
         path: external/*/
