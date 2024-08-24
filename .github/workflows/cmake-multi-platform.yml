@@ -28,7 +28,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    # required so cmake finds msvc compilers
     - uses: ilammy/msvc-dev-cmd@v1
+    
     - uses: seanmiddleditch/gha-setup-ninja@v5
 
     - name: Variables
