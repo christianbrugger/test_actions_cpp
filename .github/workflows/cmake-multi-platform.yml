@@ -34,13 +34,13 @@ jobs:
         echo "build-output-dir=${{ github.workspace }}/build/${{ matrix.preset }}" >> "$GITHUB_OUTPUT"
 
     - name: Install Ninja Linux
-      if: runner.os == "Linux"
+      if: runner.os == 'Linux'
       run: |
         sudo apt-get update
         sudo apt-get install -y ninja-build
     
     - name: Install Ninja Windows
-      if: runner.os == "Windows"
+      if: runner.os == 'Windows'
       run: choco install ninja -y
     
     - name: Configure CMake
@@ -57,13 +57,13 @@ jobs:
         ninja
 
     - name: Test Linux
-      if: runner.os == "Linux"
+      if: runner.os == 'Linux'
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
         ./action_cli
 
     - name: Test Windows
-      if: runner.os == "Windows"
+      if: runner.os == 'Windows'
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
         ./action_cli.exe
