@@ -18,6 +18,11 @@ AllowShortFunctionsOnASingleLine: Empty
 
 IncludeBlocks: Regroup
 IncludeCategories:
+- Regex:    '^<(fmt/)'
+  Priority: 3
+- Regex:    '^<Q'
+  CaseSensitive:   true
+  Priority: 4
 - Regex:    '^<'
   Priority: 5
 - Regex:    '^"'
