@@ -50,7 +50,7 @@ jobs:
       CCACHE_SLOPPINESS: 'pch_defines,time_macros,include_file_mtime,include_file_ctime'
       CCACHE_DEPEND: 'true'
 
-      MY_VAR: ${{ matrix.os == 'Linux' && 'linux_value' || 'windows_value' }}
+      MY_VAR: ${{ runner.os == 'Linux' && 'linux_value' || 'windows_value' }}
 
 
     steps:
