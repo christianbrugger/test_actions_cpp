@@ -39,6 +39,12 @@ jobs:
       # set default platform plugin for qt so the executables can run
       QT_QPA_PLATFORM: offscreen
 
+      CCACHE_BASEDIR: ${{ github.workspace }}
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CCACHE_COMPRESS: 'true'
+      CCACHE_COMPRESSLEVEL: '6'
+      CCACHE_MAXSIZE: '600M'
+
     steps:
 
     #
@@ -86,11 +92,14 @@ jobs:
         rm 'ccache.zip'
 
     - name: Test CCache
-      shell: bash
+      if: runner.os == 'Linux'
       run: |
-        ls -la
-        echo ${PATH}
-        ccache.exe --version
+        ccache --show-config
+        
+    - name: Test CCache
+      if: runner.os == 'Windows'
+      run: |
+        ccache.exe --show-config
 
     - name: ccache cache files
       uses: actions/cache@v4
