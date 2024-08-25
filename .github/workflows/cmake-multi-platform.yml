@@ -117,19 +117,11 @@ jobs:
 
 
     - name: Test
-      if: runner.os == 'Linux'
       run: |
         ccache --show-config
-        ccache -s
-        ccache -z
-        ccache -s
-    - name: Test
-      if: runner.os == 'Windows'
-      run: |
-        ccache.exe -p
-        ccache.exe -s
-        ccache.exe -z
-        ccache.exe -s
+        ccache --show-stats
+        ccache --zero-stats
+        ccache --show-stats
 
 
 
@@ -251,8 +243,8 @@ jobs:
     - name: Test
       if: runner.os == 'Linux'
       run: |
-        ccache -s
+        ccache --show-stats
     - name: Test
       if: runner.os == 'Windows'
       run: |
-        ccache.exe -s
+        ccache.exe --show-stats
