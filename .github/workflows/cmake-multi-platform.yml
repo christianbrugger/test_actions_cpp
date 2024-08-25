@@ -101,8 +101,8 @@ jobs:
     - name: Install CCache Windows
       if: runner.os == 'Windows'
       run: |
-        Invoke-WebRequest \
-          -OutFile 'ccache.zip' \
+        Invoke-WebRequest `
+          -OutFile 'ccache.zip' `
           -Uri 'https://github.com/ccache/ccache/releases/download/v${{ env.LS_CCACHE_VERSION }}/ccache-${{ env.LS_CCACHE_VERSION }}-windows-x86_64.zip'
         Expand-Archive -Path 'ccache.zip' -DestinationPath '.'
         mv 'ccache-${{ env.LS_CCACHE_VERSION }}-windows-x86_64/ccache.exe' 'C:/Windows/System32/'
