@@ -115,6 +115,22 @@ jobs:
 
 
 
+
+    - name: Test
+      if: runner.os == 'Linux'
+      run: |
+        ccache -p
+        ccache -s
+        ccache -z
+    - name: Test
+      if: runner.os == 'Windows'
+      run: |
+        ccache.exe -p
+        ccache.exe -s
+        ccache.exe -z
+
+
+
     #
     # Installing Workflow Dependencies
     #
