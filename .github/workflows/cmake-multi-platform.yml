@@ -91,7 +91,7 @@ jobs:
         echo "${{ github.workspace }}" >> $GITHUB_PATH
         ls -la
         echo ${PATH}
-        ccache --version
+        ccache.exe --version
 
 
     # #
