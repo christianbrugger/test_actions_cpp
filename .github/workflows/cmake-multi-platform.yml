@@ -119,15 +119,17 @@ jobs:
     - name: Test
       if: runner.os == 'Linux'
       run: |
-        ccache -p
+        ccache --show-config
         ccache -s
         ccache -z
+        ccache -s
     - name: Test
       if: runner.os == 'Windows'
       run: |
         ccache.exe -p
         ccache.exe -s
         ccache.exe -z
+        ccache.exe -s
 
 
 
@@ -244,3 +246,13 @@ jobs:
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
         ./action_cli.exe
+
+    
+    - name: Test
+      if: runner.os == 'Linux'
+      run: |
+        ccache -s
+    - name: Test
+      if: runner.os == 'Windows'
+      run: |
+        ccache.exe -s
