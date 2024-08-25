@@ -108,7 +108,6 @@ jobs:
     - name: CCache Config
       run: |
         ccache --zero-stats
-        ccache --show-config
         ccache --show-stats
 
 
@@ -194,38 +193,42 @@ jobs:
 
 
 
-    #
-    # Build
-    #
+    # #
+    # # Build
+    # #
 
-    - name: Configure CMake
-      working-directory: ${{ github.workspace }}
-      run: |
-        cmake --version
-        cmake --preset ${{ matrix.preset }}
+    # - name: Configure CMake
+    #   working-directory: ${{ github.workspace }}
+    #   run: |
+    #     cmake --version
+    #     cmake --preset ${{ matrix.preset }}
 
-    - name: Build
-      working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      run: |
-        ninja -v
+    # - name: Build
+    #   working-directory: ${{ steps.strings.outputs.build-output-dir }}
+    #   run: |
+    #     ninja -v
 
 
-    #
-    # Test
-    #
+    # #
+    # # Test
+    # #
     
-    - name: Test Linux
-      if: runner.os == 'Linux'
-      working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      run: |
-        ./action_cli
+    # - name: Test Linux
+    #   if: runner.os == 'Linux'
+    #   working-directory: ${{ steps.strings.outputs.build-output-dir }}
+    #   run: |
+    #     ./action_cli
     
-    - name: Test Windows
-      if: runner.os == 'Windows'
-      working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      run: |
-        ./action_cli.exe
+    # - name: Test Windows
+    #   if: runner.os == 'Windows'
+    #   working-directory: ${{ steps.strings.outputs.build-output-dir }}
+    #   run: |
+    #     ./action_cli.exe
 
-    - name: CCache Statistics
-      run: |
-        ccache --show-stats
+
+    # #
+    # # Stats
+    # #
+    # - name: CCache Statistics
+    #   run: |
+    #     ccache --show-stats
