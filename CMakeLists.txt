@@ -6,10 +6,25 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+#
+# Include
+#
+
+include(cmake/ccache.cmake)
+
 
 #
-# Global Setup
+# CMake Options
 #
+
+option(LS_ENABLE_CCACHE "Enable ccache." ON)
+
+
+#
+# Project Setup
+#
+
+ls_setup_ccache("${LS_ENABLE_CCACHE}")
 
 # needed by a lot of tools
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
