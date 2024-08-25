@@ -81,7 +81,7 @@ jobs:
       run: |
         Invoke-WebRequest -Uri 'https://github.com/ccache/ccache/releases/download/v4.10.2/ccache-4.10.2-windows-x86_64.zip' -OutFile 'ccache.zip'
         Expand-Archive -Path 'ccache.zip' -DestinationPath '.'
-        Rename-Item -Path '.\ccache-4.10.2-windows-x86_64\ccache.exe' -NewName './ccache.exe'
+        mv 'ccache-4.10.2-windows-x86_64/ccache.exe' .
         $Env:Path = [System.Environment]::GetEnvironmentVariable('Path', [System.EnvironmentVariableTarget]::Machine) + ';' + "${{ github.workspace }}"
         [System.Environment]::SetEnvironmentVariable('Path', $Env:Path, [System.EnvironmentVariableTarget]::Machine)
 
