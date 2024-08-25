@@ -44,7 +44,7 @@ jobs:
       CCACHE_DIR: ${{ github.workspace }}/.ccache
       CCACHE_COMPRESS: 'true'
       CCACHE_COMPRESSLEVEL: '6'
-      CCACHE_MAXSIZE: '600M'
+      CCACHE_MAXSIZE: '1000M'
       
       CCACHE_NOHASHDIR: 'true'
       CCACHE_SLOPPINESS: 'pch_defines,time_macros,include_file_mtime,include_file_ctime'
@@ -83,13 +83,6 @@ jobs:
     # Install CCache
     #
 
-    
-    # - name: Install CCache Linux
-    #   if: runner.os == 'Linux'
-    #   run: |
-    #     sudo apt-get update
-    #     sudo apt-get install --yes --no-install-suggests ccache
-
     - name: Install CCache Linux
       if: runner.os == 'Linux'
       run: |
@@ -100,7 +93,6 @@ jobs:
         mv 'ccache-${{ env.LS_CCACHE_VERSION }}-linux-x86_64/ccache' '/usr/local/bin/'
         rm -r 'ccache-${{ env.LS_CCACHE_VERSION }}-linux-x86_64'
         rm -r 'ccache.tar.xz'
-    
     - name: Install CCache Windows
       if: runner.os == 'Windows'
       run: |
@@ -111,7 +103,6 @@ jobs:
         mv 'ccache-${{ env.LS_CCACHE_VERSION }}-windows-x86_64/ccache.exe' 'C:/Windows/System32/'
         rm -r 'ccache-${{ env.LS_CCACHE_VERSION }}-windows-x86_64'
         rm 'ccache.zip'
-
     - name: Download CCache Cache
       uses: actions/cache@v4
       with:
@@ -119,7 +110,6 @@ jobs:
         path: .ccache
         restore-keys: |
           ${{ matrix.preset }}-ccache-
-
     - name: CCache Config
       run: |
         ccache --zero-stats
