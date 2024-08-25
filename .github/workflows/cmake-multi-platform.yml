@@ -14,6 +14,7 @@ on:
 
 env:
   LS_QT_VERSION: 6.7.2
+  LS_CCACHE_VERSION: 4.10.2
 
 jobs:
   build:
@@ -89,19 +90,23 @@ jobs:
     - name: Install CCache Linux
       if: runner.os == 'Linux'
       run: |
-        wget -O 'ccache.tar.xz' 'https://github.com/ccache/ccache/releases/download/v4.10.2/ccache-4.10.2-linux-x86_64.tar.xz'
+        wget -q \
+          -O 'ccache.tar.xz' \
+          'https://github.com/ccache/ccache/releases/download/v${{ env.LS_CCACHE_VERSION }}/ccache-${{ env.LS_CCACHE_VERSION }}-linux-x86_64.tar.xz'
         tar -xf 'ccache.tar.xz'
-        mv 'ccache-4.10.2-linux-x86_64/ccache' '/usr/local/bin/'
-        rm -r 'ccache-4.10.2-linux-x86_64'
+        mv 'ccache-${{ env.LS_CCACHE_VERSION }}-linux-x86_64/ccache' '/usr/local/bin/'
+        rm -r 'ccache-${{ env.LS_CCACHE_VERSION }}-linux-x86_64'
         rm -r 'ccache.tar.xz'
     
     - name: Install CCache Windows
       if: runner.os == 'Windows'
       run: |
-        Invoke-WebRequest -OutFile 'ccache.zip' -Uri 'https://github.com/ccache/ccache/releases/download/v4.10.2/ccache-4.10.2-windows-x86_64.zip'
+        Invoke-WebRequest \
+          -OutFile 'ccache.zip' \
+          -Uri 'https://github.com/ccache/ccache/releases/download/v${{ env.LS_CCACHE_VERSION }}/ccache-${{ env.LS_CCACHE_VERSION }}-windows-x86_64.zip'
         Expand-Archive -Path 'ccache.zip' -DestinationPath '.'
-        mv 'ccache-4.10.2-windows-x86_64/ccache.exe' 'C:/Windows/System32/'
-        rm -r 'ccache-4.10.2-windows-x86_64'
+        mv 'ccache-${{ env.LS_CCACHE_VERSION }}-windows-x86_64/ccache.exe' 'C:/Windows/System32/'
+        rm -r 'ccache-${{ env.LS_CCACHE_VERSION }}-windows-x86_64'
         rm 'ccache.zip'
 
     - name: Download CCache Cache
