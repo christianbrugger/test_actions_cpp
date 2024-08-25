@@ -40,18 +40,54 @@ jobs:
       QT_QPA_PLATFORM: offscreen
 
     steps:
-    # - uses: actions/checkout@v4
-    #   with:
-    #     persist-credentials: false
 
-    - name: Clone Repo
+    #
+    # Manual Clone the Repository
+    #
+    # Replacing the standard checkout with a mnaul clone. The action
+    # sets & unsets credentials for all submodules which is very 
+    # slow on windows and its not needed.
+    #
+    # Standard checkout (including post run action)
+    #       uses: actions/checkout@v4
+    #  ubuntu-24.04:    2 seconds
+    #  windows-2022:   17 seconds
+    #
+    # Manual clone:
+    #   ubuntu-24.04:   1 seconds    ( 2x speedup)
+    #   windows-2022:   2 seconds    (8.5x speedup)
+    #
+    - name: Git Clone
       run: >
         git clone --depth 1 
         --branch ${{ github.ref_name }} 
         https://github.com/${{ github.repository }}.git 
         ${{ github.workspace }}
 
-    
+
+    #
+    # Installing Workflow Dependencies
+    #
+
+    # Make MSVC compiler discoverable by CMake 
+    - uses: ilammy/msvc-dev-cmd@v1
+
+    # Use Ninja for the build system instead of Make
+    - uses: seanmiddleditch/gha-setup-ninja@v5
+
+    # New Python to use project scripts
+    # - name: Set up Python
+    #   if: runner.os == 'Windows'
+    #   uses: actions/setup-python@v5
+    #   with:
+    #     python-version: '3.11'
+
+
+
+    #
+    # Submodule Checkout (cached)
+    #
+
     - name: Submodule Hash
       working-directory: ${{ github.workspace }}
       run: |
@@ -61,9 +97,8 @@ jobs:
       id: cache-submodule-restore
       uses: actions/cache/restore@v4
       with:
-        # path: external/*/
-        path: .git/modules
-        key: ${{ matrix.os }}-submodule-${{ hashFiles('submodule_hashes.txt') }}-3
+        path: external/*/
+        key: ${{ matrix.os }}-submodule-${{ hashFiles('submodule_hashes.txt') }}-2
     - name: Refresh Submodule
       if: steps.cache-submodule-restore.outputs.cache-hit != 'true'
       uses: actions/checkout@v4
@@ -73,24 +108,26 @@ jobs:
       if: steps.cache-submodule-restore.outputs.cache-hit != 'true'
       uses: actions/cache/save@v4
       with:
-        # path: external/*/
-        path: .git/modules
+        path: external/*/
         key: ${{ steps.cache-submodule-restore.outputs.cache-primary-key }}
 
 
-    - name: Refresh Submodule
-      uses: actions/checkout@v4
-      with:
-        submodules: recursive
 
+    #
+    # Define Variables
+    #
 
-
-
-    # required so cmake finds MSVC compiler
-    - uses: ilammy/msvc-dev-cmd@v1
+    - name: Variables
+      id: strings
+      shell: bash
+      run: |
+        echo "build-output-dir=${{ github.workspace }}/build/${{ matrix.preset }}" >> "$GITHUB_OUTPUT"
     
-    - uses: seanmiddleditch/gha-setup-ninja@v5
 
+
+    #
+    # Install Qt
+    #
 
     - name: Install Latest Qt
       if: ${{ ! matrix.system_qt }}
@@ -108,12 +145,12 @@ jobs:
         sudo apt-get install --yes --no-install-suggests \
             qt6-base-dev libqt6svg6 qt6-base-private-dev
 
-    - name: Variables
-      id: strings
-      shell: bash
-      run: |
-        echo "build-output-dir=${{ github.workspace }}/build/${{ matrix.preset }}" >> "$GITHUB_OUTPUT"
-    
+
+
+    #
+    # Build
+    #
+
     - name: Configure CMake
       working-directory: ${{ github.workspace }}
       run: |
@@ -124,6 +161,11 @@ jobs:
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: |
         ninja -v
+
+
+    #
+    # Test
+    #
     
     - name: Test Linux
       if: runner.os == 'Linux'
