@@ -95,17 +95,7 @@ jobs:
         rm -r 'ccache-4.10.2-windows-x86_64'
         rm 'ccache.zip'
 
-    - name: Test CCache
-      if: runner.os == 'Linux'
-      run: |
-        ccache --show-config
-        
-    - name: Test CCache
-      if: runner.os == 'Windows'
-      run: |
-        ccache.exe --show-config
-
-    - name: ccache cache files
+    - name: CCache Cache Download
       uses: actions/cache@v4
       with:
         key: ${{ matrix.preset }}-ccache-${{ github.event.repository.updated_at }}
@@ -113,14 +103,10 @@ jobs:
         restore-keys: |
           ${{ matrix.preset }}-ccache-
 
-
-
-
-    - name: Test
+    - name: CCache Config
       run: |
-        ccache --show-config
-        ccache --show-stats
         ccache --zero-stats
+        ccache --show-config
         ccache --show-stats
 
 
@@ -239,12 +225,6 @@ jobs:
       run: |
         ./action_cli.exe
 
-    
-    - name: Test
-      if: runner.os == 'Linux'
+    - name: CCache Statistics
       run: |
         ccache --show-stats
-    - name: Test
-      if: runner.os == 'Windows'
-      run: |
-        ccache.exe --show-stats
