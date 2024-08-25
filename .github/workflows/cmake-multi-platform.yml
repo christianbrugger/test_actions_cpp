@@ -40,18 +40,12 @@ jobs:
       # set default platform plugin for qt so the executables can run
       QT_QPA_PLATFORM: offscreen
 
+      # change cache dir & size of ccache
       CCACHE_BASEDIR: ${{ github.workspace }}
       CCACHE_DIR: ${{ github.workspace }}/.ccache
       CCACHE_COMPRESS: 'true'
       CCACHE_COMPRESSLEVEL: '6'
       CCACHE_MAXSIZE: '1000M'
-      
-      CCACHE_NOHASHDIR: 'true'
-      CCACHE_SLOPPINESS: 'pch_defines,time_macros,include_file_mtime,include_file_ctime'
-      CCACHE_DEPEND: 'true'
-
-      MY_VAR: ${{ startsWith(matrix.os, 'windows-') && 'windows_value' || 'linux_value' }}
-
 
     steps:
 
