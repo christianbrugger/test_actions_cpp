@@ -80,22 +80,31 @@ jobs:
     #
 
     
+    # - name: Install CCache Linux
+    #   if: runner.os == 'Linux'
+    #   run: |
+    #     sudo apt-get update
+    #     sudo apt-get install --yes --no-install-suggests ccache
+
     - name: Install CCache Linux
       if: runner.os == 'Linux'
       run: |
-        sudo apt-get update
-        sudo apt-get install --yes --no-install-suggests ccache
-
+        wget -O 'ccache.tar.xz' 'https://github.com/ccache/ccache/releases/download/v4.10.2/ccache-4.10.2-linux-x86_64.tar.xz'
+        tar -xf 'ccache.tar.xz'
+        mv 'ccache-4.10.2-linux-x86_64/ccache' '/usr/local/bin/'
+        rm -r 'ccache-4.10.2-linux-x86_64'
+        rm -r 'ccache.tar.xz'
+    
     - name: Install CCache Windows
       if: runner.os == 'Windows'
       run: |
-        Invoke-WebRequest -Uri 'https://github.com/ccache/ccache/releases/download/v4.10.2/ccache-4.10.2-windows-x86_64.zip' -OutFile 'ccache.zip'
+        Invoke-WebRequest -OutFile 'ccache.zip' -Uri 'https://github.com/ccache/ccache/releases/download/v4.10.2/ccache-4.10.2-windows-x86_64.zip'
         Expand-Archive -Path 'ccache.zip' -DestinationPath '.'
         mv 'ccache-4.10.2-windows-x86_64/ccache.exe' 'C:/Windows/System32/'
         rm -r 'ccache-4.10.2-windows-x86_64'
         rm 'ccache.zip'
 
-    - name: CCache Cache Download
+    - name: Download CCache Cache
       uses: actions/cache@v4
       with:
         key: ${{ matrix.preset }}-ccache-${{ github.event.repository.updated_at }}
