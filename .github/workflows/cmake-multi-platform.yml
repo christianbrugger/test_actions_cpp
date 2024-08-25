@@ -109,7 +109,6 @@ jobs:
         ccache --zero-stats
         ccache --show-config
         ccache --show-stats
-        echo ${{ env.MY_VAR }}
 
 
 
