@@ -81,7 +81,7 @@ jobs:
       run: |
         Invoke-WebRequest -Uri 'https://github.com/ccache/ccache/releases/download/v4.10.2/ccache-4.10.2-windows-x86_64.zip' -OutFile 'ccache.zip'
         Expand-Archive -Path 'ccache.zip' -DestinationPath '.'
-        mv 'ccache-4.10.2-windows-x86_64/ccache.exe' .
+        mv 'ccache-4.10.2-windows-x86_64/ccache.exe' 'C:/Windows/System32/'
         rm -r 'ccache-4.10.2-windows-x86_64'
         rm 'ccache.zip'
 
